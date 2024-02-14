@@ -38,7 +38,7 @@ userRouter.post("/login", async (req, res) => {
             bcrypt.compare(pass, existingUser.pass, function (err, result) {
                 if (result) {
                     const token = jwt.sign({userId: existingUser._id,author:existingUser.name}, 'masai',{expiresIn:"1h"});
-                    res.status(200).send({ "login successful": token })
+                    res.status(200).send({ "loginsuccessful": token })
                 } else {
                     res.status(200).send("Invalid Credentials!!")
                 }
