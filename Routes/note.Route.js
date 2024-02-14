@@ -19,7 +19,7 @@ noteRouter.get('/',auth,async (req,res)=> {
 try {
      const notes =await NoteModel.find({userId:req.body.userId});
      if(notes) {
-        res.send({"your notes":notes})
+        res.send({msg:"your notes",notes})
      } else {
         res.send({msg:"Please add some notes"})
      }
