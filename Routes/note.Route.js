@@ -45,7 +45,7 @@ noteRouter.patch("/:noteId",auth,async(req,res)=>{
     }
 })
 
-noteRouter.delete("/:noteId",async(req,res)=>{
+noteRouter.delete("/:noteId",auth,async(req,res)=>{
     const {noteId} = req.params
     try{
         const note = await NoteModel.findOne({_id:noteId})
