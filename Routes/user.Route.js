@@ -10,11 +10,11 @@ userRouter.post("/register", async (req, res) => {
     try {
         const existingUser = await userModel.findOne({ email: payload.email })
         if (existingUser) {
-            res.send("user already exists")
+            res.send({msg : "user already exists"})
         } else {
             bcrypt.hash(payload.pass, 3, async function (err, hash) {
                 if (err) {
-                    res.status(400).send(err);
+                    res.status(400).send({err});
                 } else {
                     const user = new userModel({ ...payload, pass: hash })
                     await user.save();
@@ -23,8 +23,8 @@ userRouter.post("/register", async (req, res) => {
             });
         }
     } catch (err) {
-        console.log(err);
-        res.status(400).send(err)
+        console.log({err});
+        res.status(400).send({err})
     }
 })
 
@@ -40,15 +40,15 @@ userRouter.post("/login", async (req, res) => {
                     const token = jwt.sign({userId: existingUser._id,author:existingUser.name}, 'masai',{expiresIn:"1h"});
                     res.status(200).send({msg:"login successsful" ,token })
                 } else {
-                    res.status(200).send("Invalid Credentials!!")
+                    res.status(200).send({msg:"Invalid Credentials!!"})
                 }
             });
         } else {
-            res.status(200).send("Please register yourself..")
+            res.status(200).send({msg : "Email id doesn't exist"})
         }
     } catch (err) {
-        console.log(err);
-        res.status(400).send(err)
+        console.log({err});
+        res.status(400).send({err})
     }
 })
 

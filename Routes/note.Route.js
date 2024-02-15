@@ -35,13 +35,13 @@ noteRouter.patch("/:noteId",auth,async(req,res)=>{
         const note = await NoteModel.findOne({_id:noteId})
         if(note.userId===req.body.userId){
             await NoteModel.findByIdAndUpdate({_id:noteId},req.body)
-            res.send("notes updated")
+            res.send({msg:"notes updated"})
         }
         else{
-            res.send("you are not authorized")
+            res.send({msg:"not authorized"})
         }
     }catch(err){
-        res.send(err)
+        res.send({err})
     }
 })
 
@@ -53,10 +53,10 @@ noteRouter.delete("/:noteId",async(req,res)=>{
         await NoteModel.findByIdAndDelete({_id:noteId})
         res.send("notes updated")
         }else{
-            res.send("you are not authorized")
+            res.send({msg:"you are not authorized"})
         }
     }catch(err){
-        res.send(err)
+        res.send({err})
    }
 })
 
